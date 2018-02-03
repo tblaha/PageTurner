@@ -22,7 +22,7 @@ from time import sleep
 
 # create bindings between keys and gpio
 # TODO - change this to suit your needs
-bindings = ((ui.KEY_LEFT_ARROW,4),(ui.KEY_RIGHT_ARROW,5))
+bindings = ((ui.KEY_LEFT,23),(ui.KEY_RIGHT,24))
 
 # define gpio for shutdown (exit) button
 # comment out the last line of this program
@@ -43,7 +43,7 @@ class KeyBtn:
 		self.device = device
 		self.key = key		
 		gp.setup(gpio,gp.IN)
-		gp.add_event_detect(gpio,gp.RISING,callback = self.callback,bouncetime = 100)
+		gp.add_event_detect(gpio,gp.RISING,callback = self.callback,bouncetime = 300)
 						
 	def callback(self,channel):
 		# because of key bounce check button is really down
@@ -88,6 +88,7 @@ exit_button = ExitBtn(SHUTDOWN_GPIO)
 	
 # check if we should exit every half second
 while exit_button.check_continue():
+	#print(gp.input(23))
 	sleep(0.5)
 
 # All done so exit
